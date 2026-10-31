@@ -1,0 +1,33 @@
+# ====================================================
+# T.O.N.E. REAL-TIME COMPLIANCE AUDIT & SENTINEL WORKFLOW
+# ====================================================
+name: T.O.N.E. Real-Time Compliance Audit
+
+on:
+  schedule:
+    # Der unbestechliche 10-Minuten-Takt auf den Microsoft-Serverkernen
+    - cron: '*/10 * * * *'
+  push:
+    branches:
+      - main
+  workflow_dispatch: # Ermöglicht es dir, den Lauf jederzeit händisch zu triggern
+
+jobs:
+  verify-core-matrix:
+    name: Execute O(1) Invariance Gate
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository Source Vector
+        uses: actions/checkout@v4
+
+      - name: Initialize Environment (Python Runtime)
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Execute Bare-Metal Ruck Auditor
+        run: |
+          echo "🧬 Initializing T.O.N.E. Phase-Space Matrix (n=3)..."
+          python src/verify_tone.py
+          echo "✅ Matrix balanced. RIPL v1.0 parameters active and secure."
