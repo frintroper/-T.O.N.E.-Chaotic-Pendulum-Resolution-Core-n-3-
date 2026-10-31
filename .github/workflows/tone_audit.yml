@@ -29,5 +29,18 @@ jobs:
       - name: Execute Bare-Metal Ruck Auditor
         run: |
           echo "🧬 Initializing T.O.N.E. Phase-Space Matrix (n=3)..."
-          python src/verify_tone.py
+          
+          # Fallback-Gate: Sucht zuerst in src/, falls nicht da, direkt im Hauptverzeichnis
+          if [ -f "src/verify_tone.py" ]; then
+              echo "📂 Executing script from src/ directory..."
+              python src/verify_tone.py
+          elif [ -f "verify_tone.py" ]; then
+              echo "📂 Executing script from root directory..."
+              python verify_tone.py
+          else
+              echo "❌ ERROR: verify_tone.py not found in src/ or root directory!"
+              exit 1
+          fi
+          
           echo "✅ Matrix balanced. RIPL v1.0 parameters active and secure."
+
